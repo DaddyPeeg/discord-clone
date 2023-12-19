@@ -47,22 +47,23 @@ export const CreateChannelModal = () => {
   const params = useParams();
 
   const isModalOpen = isOpen && type === "createChannel";
+  const { channelType } = data;
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      type: ChannelType.TEXT,
+      type: channelType || ChannelType.TEXT,
     },
   });
 
-  // useEffect(() => {
-  //   if (channelType) {
-  //     form.setValue("type", channelType);
-  //   } else {
-  //     form.setValue("type", ChannelType.TEXT);
-  //   }
-  // }, [channelType, form]);
+  useEffect(() => {
+    if (channelType) {
+      form.setValue("type", channelType);
+    } else {
+      form.setValue("type", ChannelType.TEXT);
+    }
+  }, [channelType, form]);
 
   const isLoading = form.formState.isSubmitting;
 
@@ -131,7 +132,7 @@ export const CreateChannelModal = () => {
                         Channel Type
                       </FormLabel>
                       <select
-                        disabled={isLoading}
+                        disabled={isLoading || !!channelType}
                         onChange={field.onChange}
                         defaultValue={field.value}
                         className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none px-3 py-2 rounded-md"
