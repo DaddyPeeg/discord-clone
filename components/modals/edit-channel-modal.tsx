@@ -130,7 +130,7 @@ export const EditChannelModal = () => {
                         Channel Type
                       </FormLabel>
                       <select
-                        disabled={isLoading}
+                        disabled={isLoading || !!channel?.name}
                         onChange={field.onChange}
                         defaultValue={field.value}
                         className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none px-3 py-2 rounded-md"
